@@ -1,5 +1,10 @@
 package IntroToHashMaps;
 
+import java.lang.annotation.Documented;
+import java.util.HashMap;
+
+import javax.swing.JOptionPane;
+
 public class LogSearch {
   /* 
 	 * Crate a HashMap of Integers for the keys and Strings for the values.
@@ -28,4 +33,49 @@ public class LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+	static Object[] options = {"Add Entry", "Search by ID", "View List", "Remove Entry", "Done"};
+	static HashMap<Integer, String> log = new HashMap<>();
+	static String logList = "";
+	static boolean done = false;
+	public static void main(String[] args) {
+		while(!done) {
+			int chosenOption = JOptionPane.showOptionDialog(null, "Welcome to the Log", "Log", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			switch (chosenOption) {
+			case 0:
+				try {
+					int id = Integer.parseInt(JOptionPane.showInputDialog("ID?"));
+					String name = JOptionPane.showInputDialog("Name?");
+					log.put(id, name);
+					logList.concat("ID: " + id + " Name: " + name + ". ");
+					break;
+				}
+				catch (NumberFormatException e) {
+					break;
+				}
+
+			case 1:
+				int searchId = Integer.parseInt(JOptionPane.showInputDialog("ID?"));
+				JOptionPane.showMessageDialog(null, log.get(searchId));
+				break;
+			case 2:
+				
+				for (Integer integer : log.keySet()) {
+					System.out.println("ID: " + integer + " Name: " + log.get(integer) + ". ");
+				}
+				break;
+			case 3:
+				try {
+					int id = Integer.parseInt(JOptionPane.showInputDialog("ID?"));
+					log.remove(id);
+					break;
+				}
+				catch (NumberFormatException e) {
+					break;
+				}
+			case 4:
+				done = true;
+				break;
+			}
+		}
+	}
 }
