@@ -1,5 +1,6 @@
 package IntroToStacks;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
@@ -24,7 +25,7 @@ public class TextUndoRedo implements KeyListener{
 	 * 
 	 * */
 	static Stack<Character> characters = new Stack<>();
-	static String text = "";
+	static String text = "Demo String";
 	static JFrame frame = new JFrame("Text");
 	static JPanel panel = new JPanel();
 	static JLabel label = new JLabel(text);
@@ -36,44 +37,46 @@ public class TextUndoRedo implements KeyListener{
 		frame.pack();
 		panel.setVisible(true);
 		label.setVisible(true);
-		panel.addKeyListener(this);
+		frame.addKeyListener(this);
 		frame.setTitle("Rubber Ducky");
 	}
 	
 	public static void main(String[] args) {
 		TextUndoRedo myTextUndoRedo = new TextUndoRedo();
+		System.out.println("Starting!");
 	}
 	public static void setup() {
 	}
 		
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-				characters.push(text.charAt((text.length()-1)));
-				text = (text.substring(0, text.length() -2));
-			}
-			else if (e.getKeyCode() == KeyEvent.VK_DEAD_TILDE) {
-				text.concat("" + characters.pop());
-			}
-			else {
-				text.concat("" + e.getKeyChar());
-			}
-			frame.setTitle(text);
-			System.out.println(text);
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+		//System.out.println("keep going");
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !text.isEmpty()) {
+			characters.push(text.charAt((text.length()-1)));
+			text = (text.substring(0, text.length() -1));
 		}
-		
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
+		else if (e.getKeyCode() == KeyEvent.VK_ALT && !characters.empty()) {
+			text = text.concat("" + characters.pop());
 		}
-		
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
+		else {
+			text = text.concat("" + e.getKeyChar());
 		}
+		label.setText(text);
+		//System.out.println(text);
+	}
 	
 	}
 	
